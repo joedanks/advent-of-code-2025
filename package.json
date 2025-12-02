@@ -1,0 +1,37 @@
+{
+  "name": "advent-of-code-2025",
+  "version": "1.0.0",
+  "description": "Advent of Code 2025 Solutions",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watchAll"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joedanks/advent-of-code-2025.git"
+  },
+  "bugs": {
+    "url": "https://github.com/joedanks/advent-of-code-2025/issues"
+  },
+  "homepage": "https://github.com/joedanks/advent-of-code-2025#readme",
+  "devDependencies": {
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-typescript": "^7.26.0",
+    "@types/lodash": "^4.17.13",
+    "@types/jest": "^30.0.0",
+    "babel-jest": "^30.2.0",
+    "esbuild": "^0.27.0",
+    "esbuild-jest": "^0.5.0",
+    "jest": "^30.2.0",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-typescript"
+    ]
+  }
+}
