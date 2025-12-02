@@ -1,17 +1,21 @@
-import input from './input.json';
-
 export function part1(data: string[]): number {
-  // TODO: Implement part 1
-  return 0;
+  let zeroCount = 0;
+  let pointer = 50;
+  data.forEach(c => {
+    const direction = c.charAt(0);
+    let next = direction == 'L' ? pointer - parseInt(c.substring(1)) : pointer + parseInt(c.substring(1));
+    next = next % 100;
+    if (next < 0) {
+      next += 100;
+    }
+    pointer = next;
+    if (pointer == 0) {
+      zeroCount++;
+    }
+  })
+  return zeroCount;
 }
 
 export function part2(data: string[]): number {
-  // TODO: Implement part 2
   return 0;
-}
-
-// Run the solutions
-if (require.main === module) {
-  console.log('Part 1:', part1(input));
-  console.log('Part 2:', part2(input));
 }
