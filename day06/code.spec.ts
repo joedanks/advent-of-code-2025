@@ -23,7 +23,7 @@ describe("Day 06", () => {
       expect(part2(testInput)).toBe(3263827);
     });
     it("should solve the real input", () => {
-      expect(part2(input)).toBe(0);
+      expect(part2(input)).toBe(10142723156431);
     });
   });
 });
