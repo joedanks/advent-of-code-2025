@@ -78,14 +78,29 @@ export function part1(data: string[]): number {
 export function part2(data: string[]): number {
   const [map, start] = parseInput(data);
 
-  let currentBeams: [number, number][] = advanceBeam(map, start);
+  let currentBeams: Map<string, number> = new Map();
+  advanceBeam(map, start).forEach((beam) => {
+    const key = toKey(beam[0], beam[1]);
+    currentBeams.set(key, 1);
+  });
+
   for (let i = 0; i < data.length; i++) {
-    const nextSteps: [number, number][] = [];
-    currentBeams.forEach((beam) => {
-      const nextBeams = advanceBeam(map, beam);
-      nextBeams.forEach((n) => nextSteps.push(n));
+    const nextSteps: Map<string, number> = new Map();
+
+    currentBeams.forEach((count, beamKey) => {
+      const beam = fromKey(beamKey);
+      advanceBeam(map, beam).forEach((n) => {
+        const key = toKey(n[0], n[1]);
+        nextSteps.set(key, (nextSteps.get(key) ?? 0) + count);
+      });
     });
+
     currentBeams = nextSteps;
   }
-  return currentBeams.length;
+
+  let totalPaths = 0;
+  currentBeams.forEach((count) => {
+    totalPaths += count;
+  });
+  return totalPaths;
 }

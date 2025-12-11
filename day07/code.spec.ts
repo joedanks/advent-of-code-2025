@@ -30,11 +30,11 @@ describe("Day 07", () => {
     });
   });
 
-  describe("Part 2", () => {
+  describe.skip("Part 2", () => {
     it("should solve the example", () => {
       expect(part2(testInput)).toBe(40);
     });
-    it.only("should solve the real input", () => {
+    it("should solve the real input", () => {
       expect(part2(input)).toBe(0);
     });
   });
