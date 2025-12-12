@@ -102,6 +102,48 @@ export function part1(data: string[], connectionsToMake: number): number {
 }
 
 export function part2(data: string[]): number {
-  // TODO: Implement part 2 solution
-  return 0;
+  const junctions = parseInput(data);
+  const distances = computeJunctionDistances(junctions);
+  const connections: JunctionDistance[] = [];
+  const circuits: Circuit[] = [];
+  let finalConnection: JunctionDistance;
+
+  do {
+    const shortestDistance = distances.reduce((acc, next) => {
+      if (next.distance < acc.distance) {
+        return next;
+      }
+      return acc;
+    });
+    connections.push(shortestDistance);
+    distances.splice(distances.indexOf(shortestDistance), 1);
+    const existing = circuits.filter(
+      (c) =>
+        c.junctions.has(shortestDistance.a) ||
+        c.junctions.has(shortestDistance.b)
+    );
+    if (existing.length === 1) {
+      existing[0].junctions.add(shortestDistance.a);
+      existing[0].junctions.add(shortestDistance.b);
+    } else if (existing.length === 2) {
+      circuits.splice(circuits.indexOf(existing[0]), 1);
+      circuits.splice(circuits.indexOf(existing[1]), 1);
+      const mergedJunctions = [
+        ...existing[0].junctions,
+        ...existing[1].junctions,
+      ].reduce((acc, next) => acc.add(next), new Set<string>());
+      circuits.push({
+        junctions: mergedJunctions,
+      });
+    } else {
+      circuits.push({
+        junctions: new Set<string>()
+          .add(shortestDistance.a)
+          .add(shortestDistance.b),
+      });
+    }
+    finalConnection = shortestDistance;
+  } while (circuits[0].junctions.size < junctions.length);
+
+  return fromKey(finalConnection.a)[0] * fromKey(finalConnection.b)[0];
 }

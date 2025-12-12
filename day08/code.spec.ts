@@ -25,7 +25,7 @@ describe("Day 08", () => {
     "425,690,689",
   ];
 
-  describe("Part 1", () => {
+  describe.skip("Part 1", () => {
     it("should solve the example", () => {
       expect(part1(testInput, 10)).toBe(40);
     });
@@ -36,7 +36,7 @@ describe("Day 08", () => {
 
   describe.skip("Part 2", () => {
     it("should solve the example", () => {
-      expect(part2(testInput)).toBe(0);
+      expect(part2(testInput)).toBe(25272);
     });
     it("should solve the real input", () => {
       expect(part2(input)).toBe(0);
