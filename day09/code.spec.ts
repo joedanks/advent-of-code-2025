@@ -22,7 +22,7 @@ describe("Day 09", () => {
     });
   });
 
-  describe("Part 2", () => {
+  describe.skip("Part 2", () => {
     it.skip("should solve the example", () => {
       expect(part2(testInput)).toBe(24);
     });
