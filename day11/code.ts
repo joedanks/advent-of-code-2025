@@ -34,7 +34,6 @@ function parseInput(data: string[]): Record<string, Node> {
 function countPathsWithRequired(
   current: Node,
   target: Node,
-  visited: Set<string>,
   requiredNodes: Set<string>,
   visitedRequired: Set<string>,
   memo: Map<string, number>
@@ -54,26 +53,19 @@ function countPathsWithRequired(
 
   let totalPaths = 0;
   for (const connection of current.connections) {
-    if (!visited.has(connection.name)) {
-      visited.add(connection.name);
-
-      // Check if this connection is a required node
-      const newVisitedRequired = new Set(visitedRequired);
-      if (requiredNodes.has(connection.name)) {
-        newVisitedRequired.add(connection.name);
-      }
-
-      totalPaths += countPathsWithRequired(
-        connection,
-        target,
-        visited,
-        requiredNodes,
-        newVisitedRequired,
-        memo
-      );
-
-      visited.delete(connection.name);
+    // Check if this connection is a required node
+    const newVisitedRequired = new Set(visitedRequired);
+    if (requiredNodes.has(connection.name)) {
+      newVisitedRequired.add(connection.name);
     }
+
+    totalPaths += countPathsWithRequired(
+      connection,
+      target,
+      requiredNodes,
+      newVisitedRequired,
+      memo
+    );
   }
 
   memo.set(cacheKey, totalPaths);
@@ -84,40 +76,22 @@ export function part1(data: string[]): number {
   const nodes = parseInput(data);
   const you = nodes["you"];
   const out = nodes["out"];
-  const visited = new Set<string>([you.name]);
   const memo = new Map<string, number>();
   const requiredNodes = new Set<string>();
   const visitedRequired = new Set<string>();
 
-  return countPathsWithRequired(
-    you,
-    out,
-    visited,
-    requiredNodes,
-    visitedRequired,
-    memo
-  );
+  return countPathsWithRequired(you, out, requiredNodes, visitedRequired, memo);
 }
 
 export function part2(data: string[]): number {
   const nodes = parseInput(data);
   const svr = nodes["svr"];
-  const dac = nodes["dac"];
-  const fft = nodes["fft"];
   const out = nodes["out"];
 
   // Count paths from svr to out that visit both dac and fft
-  const visited = new Set<string>([svr.name]);
   const memo = new Map<string, number>();
   const requiredNodes = new Set<string>(["dac", "fft"]);
   const visitedRequired = new Set<string>();
 
-  return countPathsWithRequired(
-    svr,
-    out,
-    visited,
-    requiredNodes,
-    visitedRequired,
-    memo
-  );
+  return countPathsWithRequired(svr, out, requiredNodes, visitedRequired, memo);
 }
